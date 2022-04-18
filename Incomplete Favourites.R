@@ -1,0 +1,6 @@
+total_favourite = aggregate(data$Favourite, by=list(data$Favourite), FUN=length)
+incomplete_favourite = aggregate(incomplete$Favourite, by=list(incomplete$Favourite), FUN=length)
+incomplete_favourite_percentage = round((incomplete_favourite$x/total_favourite$x) * 100, digits = 2)
+incomplete_favourite <- data.frame(incomplete_favourite, incomplete_favourite_percentage, total_favourite$x)
+colnames(incomplete_favourite) <- c('Favourite', 'Incomplete', 'Incomplete Percentage', 'Total')
+write.csv(incomplete_favourite, "incomplete_favourite.csv")

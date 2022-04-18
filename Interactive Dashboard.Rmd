@@ -1,0 +1,73 @@
+---
+title: "Probability for Horse Incompletion in National Hunt Racing"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(dplyr)
+library(plotly)
+```
+
+```{r data}
+dashboardData = read.csv("C:\\Users\\maryh\\OneDrive - University College Cork\\College - 4th Year\\Semester 2\\ST4092 - Data Analytics Project\\Irish Racing Data\\Databases\\Dashboard Database.csv")
+
+raceType.Variables = dashboardData$Race.Type
+raceCourse.Variables = dashboardData$Race.Course
+raceConditions.Variables = dashboardData$Race.Conditions
+raceDistance.Variables = dashboardData$Distance..in.miles.
+numberHorses.Variables = dashboardData$Number.of.Horses
+age.Variables = dashboardData$Age
+weight.Variables = dashboardData$Weight..in.lbs.
+favourite.Variables = dashboardData$Favourite
+```
+
+Column {.sidebar data-width=250}
+---------------------------------------------------------------
+
+```{r}
+
+radioButtons("race_type", label="Select Race Type:", choices=c(unique(raceType.Variables)), selected=character(0))
+
+selectInput("race_course", label="Select Race Course:", choices=raceCourse.Variables)
+
+selectInput("race_conditions", label="Select Ground Conditions:", choices=raceConditions.Variables)
+
+sliderInput("race_distance", label="Select Race Distance (in Miles):", value=0, min=1.88, max=4.25, step=0.01)
+
+sliderInput("number_horses", label="Select Number of Horses in Race:", value=1, min=3, max=30, step=1)
+
+sliderInput("horses_age", label="Select Age of Horse:", value=1, min=3, max=16, step=1)
+
+sliderInput("horses_weight", label="Select Weight of Horse (in Pounds):", value=1, min=129, max=175, step=1)
+
+radioButtons("race_favourite", label="Select Whether Horse is Favourite or Not:", choices=c(unique(favourite.Variables)), selected=character(0))
+```
+
+Column {data-width=600}
+---------------------------------------------------------------
+
+### Results of Selected Data
+
+```{r}
+
+renderUI({
+        HTML(paste("<b>", 'Race Type:', "</b>", input$race_type, "<b>", '<br> Race Course:', "</b>", input$race_course,"<b>", '<br> Ground Conditions:', "</b>", input$race_conditions, "<b>", '<br> Race Distance:', "</b>", input$race_distance, "<b>", '<br> Number of Horses Racing:', "</b>", input$number_horses, "<b>", '<br> Age of Horse:', "</b>", input$horses_age, "<b>", '<br> Weight Horse is Carrying:', "</b>", input$horses_weight, "<b>", '<br> Whether Horse is Favourite or Not:', "</b>", input$race_favourite))
+})
+```
+
+Column {data-width=200}
+---------------------------------------------------------------
+
+### Probability of Horse Not Completing Race
+
+```{r}
+```
+
+Column {data-width=200}
+---------------------------------------------------------------

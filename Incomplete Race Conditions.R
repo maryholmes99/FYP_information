@@ -1,0 +1,6 @@
+total_raceConditions = aggregate(data$`Race Conditions`, by=list(data$`Race Conditions`), FUN=length)
+incomplete_raceConditions = aggregate(incomplete$`Race Conditions`, by=list(incomplete$`Race Conditions`), FUN=length)
+incomplete_raceConditions_percentage = round((incomplete_raceConditions$x/total_raceConditions$x) * 100, digits = 2)
+incomplete_raceConditions <- data.frame(incomplete_raceConditions, incomplete_raceConditions_percentage, total_raceConditions$x)
+colnames(incomplete_raceConditions) <- c('Race Conditions', 'Incomplete', 'Incomplete Percentage', 'Total')
+write.csv(incomplete_raceConditions, "incomplete_raceConditions.csv")

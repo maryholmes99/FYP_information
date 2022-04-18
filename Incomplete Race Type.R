@@ -1,0 +1,6 @@
+total_raceType = aggregate(data$`Race Type`, by=list(data$`Race Type`), FUN=length)
+incomplete_raceType = aggregate(incomplete$`Race Type`, by=list(incomplete$`Race Type`), FUN=length)
+incomplete_raceType_percentage = round((incomplete_raceType$x/total_raceType$x) * 100, digits = 2)
+incomplete_raceType <- data.frame(incomplete_raceType, incomplete_raceType_percentage, total_raceType$x)
+colnames(incomplete_raceType) <- c('Race Type', 'Incomplete', 'Incomplete Percentage', 'Total')
+write.csv(incomplete_raceType, "incomplete_raceType.csv")
